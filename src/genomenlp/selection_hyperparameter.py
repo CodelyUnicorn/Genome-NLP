@@ -74,15 +74,7 @@ def optuna_hp_space(trial):
     }
 
 
-# def wandb_hp_space(trial):
-#     return {
-#         "method": "random",
-#         "metric": {"name": "objective", "goal": "minimize"},
-#         "parameters": {
-#             "learning_rate": {"distribution": "uniform", "min": 1e-6, "max": 1e-4},
-#             "per_device_train_batch_size": {"values": [16, 32, 64, 128]},
-#         },
-#     }
+
 
 def main():
     parser = argparse.ArgumentParser(
