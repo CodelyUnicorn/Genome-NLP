@@ -1,0 +1,70 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 109531808,
+  "description": "",
+  "download_checksums": {
+    "/Users/sunitaverma/Desktop/genomenlp-main/data/data.hf.csv": {
+      "num_bytes": 107745255,
+      "checksum": null
+    }
+  },
+  "download_size": 107745255,
+  "features": {
+    "idx": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "feature": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "labels": {
+      "names": [
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "_type": "ClassLabel"
+    },
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "token_type_ids": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 217277063,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 109531808,
+      "num_examples": 198508,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
