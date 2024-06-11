@@ -26,6 +26,52 @@ NLP aids in efficient pre-processing and extracting 'meaning' from human languag
 - Utilized DNABERT tokenizer.
 - Utilized GenomicBERT tokenizer.
 
+For Pre-training GenomicBERT- following lines of codes were changed:
+
+Changes to GenomicBERT pipeline to replace Sequence classification function with Foundation model building (Train.py)
+ 
+1.	Change data collator function in Tyrone's code #138 to do Masking of tokens
+from transformers import DataCollatorForLanguageModeling
+ 
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer, mlm=True, mlm_probability=0.15
+)
+ 
+2.	Change distilbert config; no need to mention num_labels, remove that. Line 223
+config = DistilBertConfig(
+            vocab_size=vocab_size,
+            num_labels=2, #remove this line
+            # output_hidden_states=True,
+            # output_attentions=True
+            )
+3.	Change line 230,234 for model init..ideally all DistilBertForSequenceClassification to be replaced with DistilBertForMaskedLM
+model = DistilBertForMaskedLM(config=config)
+
+4.	#Change trainer line 302 : Can remove customized compute metrics function 
+    trainer = Trainer(
+        model_init=_model_init,
+        tokenizer=tokeniser,
+        args=args_train,
+        train_dataset=dataset["train"],
+        eval_dataset=dataset["test"],
+        compute_metrics=_compute_metrics, #remove this line
+        data_collator=data_collator,
+    ) 
+ 
+5.	Can add Evaluation function to measure perplexity. Function readily available in Transformers Trainer function.
+import math
+eval_results = trainer.evaluate()
+print(f"Perplexity: {math.exp(eval_results['eval_loss']):.2f}")
+
+6. Also comment out the following lines 161 to 163
+    #by default this will be "labels"
+    #if type(dataset[i].features[args.label_names[0]]) != ClassLabel:
+        #dataset[i] = dataset[i].class_encode_column(args.label_names[0])    
+
+
+
+
+    
 ### 5. Fine-tuning for Promoter and Non-Promoter Classification
 By fine-tuning the pre-trained models on promoter and non-promoter datasets, the models learn to distinguish between these two types of sequences based on their features and patterns.
 
